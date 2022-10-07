@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Memory Game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./styles.css" type="text/css">
+    </head>
+    <body>
+        <section>
+        <h1>Marvel-O-Pair</h1>
+        <p><i>Match all the  pairs win!</i></p>
+        <div class="score-container">
+            <h2>Attempts: <span id="attempts"></span></h2>
+            <h2>Matches: <span id="matches"></span></h2>
+        </div>
+        <div id="grid">
+            <span id="match">Match!</span>
+        </div>
+        <div id="win">
+            <h3>Congratulations!</h3>
+            <p>You've matched all the pairs</p>
+            <p>It took you <span id="finalScore"></span> attempts</p>
+            <p>Can you beat your score?</p>
+            <button id="play-again">Play Again</button>
+        </div>
+        <h2>Your best score: <span id="bestScore"></span> attempts</h2>
+    </section>
+        <script src="./app.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/party-js@latest/bundle/party.min.js"></script>
+        
+    </body>
+</html>

@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  /*background: linear-gradient(45deg, #9affb8 0%, #57afe2 60%, #1683c2 100%);*/
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background-image: url(/images/marvel-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  padding: 0.5rem;
+}
+
+section {
+    /*background: linear-gradient(45deg, #9affb8 0%, #57afe2 60%, #1683c2 100%);*/
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .95);
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 15px;
+    min-height: calc(100vh - 1.5rem);
+}
+
+.score-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+h2 {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+p {
+    margin: 0.25rem 0 1rem;
+    font-size: 1rem;
+}
+
+#attempts, #matches, #bestScore {
+    border: 3px solid white;
+    padding: 0.2rem .6rem;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: inset 2px 2px 2px rgba(0,0,0,0.2), 2px 2px 2px rgba(0,0,0,0.2);
+    margin-left: 0.3rem;
+}
+
+#grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1000px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.card {
+    width: calc((100vh - 15rem)/6)
+}
+
+img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    filter: grayscale(0.2);
+}
+
+img:hover {
+    transform: scale(1.03);
+}
+
+#match {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 2;
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    display: none;
+}
+
+/* #win is a non-visible element on page load - only utilised when the play wins a game*/
+#win {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 3;
+    padding: 1.5rem;
+    color: rgb(0, 0, 0);
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    display: none;
+    text-align: center;
+}
+
+#win h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+#win p {
+    font-size: 0.9rem;
+    margin: 0.75rem 0;
+}
+
+button {
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    border-radius: 10px;
+    margin-top: 0.75rem;
+    background-color: rgb(39, 207, 39)
+}
+
+
+
+@media screen and (min-width: 425px) {
+    h2 {
+        font-size: 1.1rem;
+    } 
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (min-width:768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    section {
+        padding: 1.5rem;
+    }
+} 
+
+
+@media screen and (orientation:landscape) {
+
+    .card {
+        width: calc((100vw - 20rem)/6);
+        max-width: 150px;
+    }
+
+    section {
+        min-height: 320px;
+    }
+
+    #grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
