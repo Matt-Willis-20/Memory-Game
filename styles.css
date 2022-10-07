@@ -156,7 +156,7 @@ button {
     }
 
     .card {
-        width: calc((100vh - 20rem)/6)
+        width: calc((100vh - 22rem)/6)
     }
 } 
 
