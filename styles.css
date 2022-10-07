@@ -22,12 +22,12 @@ section {
     background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(8px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .95);
-    padding: 0.75rem;
+    padding: 1.25rem 0.75rem;
     display: flex;
     align-items: center;
     flex-direction: column;
     border-radius: 15px;
-    min-height: calc(100vh - 1.5rem);
+    
 }
 
 .score-container {
@@ -70,7 +70,7 @@ p {
 }
 
 .card {
-    width: calc((100vh - 15rem)/6)
+    width: calc((100vh - 16rem)/6)
 }
 
 img {
@@ -155,8 +155,8 @@ button {
         font-size: 1.5rem;
     }
 
-    section {
-        padding: 1.5rem;
+    .card {
+        width: calc((100vh - 19rem)/6)
     }
 } 
 
