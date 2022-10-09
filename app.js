@@ -1,22 +1,67 @@
 const characterEndPoint = 'http://gateway.marvel.com/v1/public/characters';
 const key = 'fd3ce76143a66b2909ac5f79125aae8a';
 
-const charactersArray = [];
+let fullCharactersArray = [];
 
-const getCharacters = async () => {
+const getAllCharacters = async () => {
     const requestParams = `?apikey=${key}`;
-    const urlToFetch = `${characterEndPoint}${requestParams}&limit=100&offset=0`;
+    const urlToFetch = `${characterEndPoint}${requestParams}`;
     try {
-        const response = await fetch(urlToFetch)
+        const response = await fetch(urlToFetch + '&limit=100&offset=0')
+        const response2 = await fetch(urlToFetch + '&limit=100&offset=100')
+        const response3 = await fetch(urlToFetch + '&limit=100&offset=200')
+        const response4 = await fetch(urlToFetch + '&limit=100&offset=300')
+        const response5 = await fetch(urlToFetch + '&limit=100&offset=400')
+        const response6 = await fetch(urlToFetch + '&limit=100&offset=500')
+        const response7 = await fetch(urlToFetch + '&limit=100&offset=600')
+        const response8 = await fetch(urlToFetch + '&limit=100&offset=700')
+        const response9 = await fetch(urlToFetch + '&limit=100&offset=800')
+        const response10 = await fetch(urlToFetch + '&limit=100&offset=900')
+        const response11 = await fetch(urlToFetch + '&limit=100&offset=1000')  
+        const response12 = await fetch(urlToFetch + '&limit=100&offset=1100')
+        const response13 = await fetch(urlToFetch + '&limit=100&offset=1200')
+        const response14 = await fetch(urlToFetch + '&limit=100&offset=1300')
+        const response15 = await fetch(urlToFetch + '&limit=100&offset=1400')      
         if (response.ok) {
             const jsonResponse = await response.json();
-            const data = jsonResponse.data.results;
-            const filteredData = data.filter(character => !character.thumbnail.path.includes("image_not_available"));
+            const jsonResponse2 = await response2.json();
+            const jsonResponse3 = await response3.json();
+            const jsonResponse4 = await response4.json();
+            const jsonResponse5 = await response5.json();
+            const jsonResponse6 = await response6.json();
+            const jsonResponse7 = await response7.json();
+            const jsonResponse8 = await response8.json();
+            const jsonResponse9 = await response9.json();
+            const jsonResponse10 = await response10.json();
+            const jsonResponse11 = await response11.json();
+            const jsonResponse12 = await response12.json();
+            const jsonResponse13 = await response13.json();
+            const jsonResponse14 = await response14.json();
+            const jsonResponse15 = await response15.json();
+            const allData = [
+                ...jsonResponse.data.results, 
+                ...jsonResponse2.data.results, 
+                ...jsonResponse3.data.results,
+                ...jsonResponse4.data.results,
+                ...jsonResponse5.data.results,
+                ...jsonResponse6.data.results,
+                ...jsonResponse7.data.results,
+                ...jsonResponse8.data.results,
+                ...jsonResponse9.data.results,
+                ...jsonResponse10.data.results,
+                ...jsonResponse11.data.results,
+                ...jsonResponse12.data.results,
+                ...jsonResponse13.data.results,
+                ...jsonResponse14.data.results,
+                ...jsonResponse15.data.results
+            ];
+            const filteredData = allData.filter(character => !character.thumbnail.path.includes("image_not_available"));
             const randomOrderData = filteredData.sort(() => 0.5 - Math.random());
             const selectedCharacters = randomOrderData.slice(0, 9);
+            console.log(selectedCharacters);
             selectedCharacters.forEach(character => {
                 for (let i = 0; i < 2; i++) {
-                    charactersArray.push(
+                    fullCharactersArray.push(
                         {
                             name: character.name,
                             img: character.thumbnail.path + '/standard_large.' + character.thumbnail.extension
@@ -24,13 +69,14 @@ const getCharacters = async () => {
                     )
                 }
             });
+            fullCharactersArray.sort(() => 0.5 - Math.random());
+            console.log(fullCharactersArray);
         }
-        charactersArray.sort(() => 0.5 - Math.random());  // note, this is a nice 'trick' to randomly sort items.  When comparing to items, it will either be more than or less than 0.5, and sort accordingly
-        console.log(charactersArray);
     } catch (error) {
         console.log(error);
     };
 }
+
 
 const gridDisplay = document.querySelector('#grid');
 const attempts = document.getElementById('attempts');
@@ -52,8 +98,8 @@ let attemptCounter = 0;
 let matchesCounter = 0;
 
 async function createBoard() {
-    await getCharacters();
-    for (let i = 0; i < charactersArray.length; i++) {
+    await getAllCharacters();
+    for (let i = 0; i < fullCharactersArray.length; i++) {
         const card = document.createElement('img')
         card.setAttribute('class', "card")
         card.setAttribute('src', 'images/Marvel-Logo-Square.jpeg')
@@ -125,10 +171,10 @@ function checkMatch() {
 
 
     //check if all pairs have been found
-    if (matchesCounter == charactersArray.length / 2) {
+    if (matchesCounter == fullCharactersArray.length / 2) {
         party.confetti(gridDisplay);
         showWin();
-        if (savedScore == 0) {
+        if (savedScore == "-") {
             localStorage.setItem("savedScore", attemptCounter);
             bestScore.textContent = attemptCounter;
         } else if (attemptCounter < savedScore) {
@@ -140,9 +186,9 @@ function checkMatch() {
 
 function flipCard() {
     const cardId = this.getAttribute('data-id');  // get the 'name' of the card
-    cardsChosen.push(charactersArray[cardId].name) // add the card 'name' into the cardsChosen array so that we can then compare them
+    cardsChosen.push(fullCharactersArray[cardId].name) // add the card 'name' into the cardsChosen array so that we can then compare them
     cardsChosenIds.push(cardId);
-    this.setAttribute('src', charactersArray[cardId].img) // changes the image of the card to the image associated with the cardId
+    this.setAttribute('src', fullCharactersArray[cardId].img) // changes the image of the card to the image associated with the cardId
 
     // now we want to check to see if cards match
     if (cardsChosen.length === 2) {
