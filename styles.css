@@ -5,7 +5,6 @@
 }
 
 body {
-  /*background: linear-gradient(45deg, #9affb8 0%, #57afe2 60%, #1683c2 100%);*/
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -18,11 +17,10 @@ body {
 }
 
 section {
-    /*background: linear-gradient(45deg, #9affb8 0%, #57afe2 60%, #1683c2 100%);*/
     background-color: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(8px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .95);
-    padding: 1.25rem 0.75rem;
+    padding: 1rem 0.5rem 1.25rem;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -63,22 +61,22 @@ p {
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(3, 1fr);
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 20px 0;
     position: relative;
-    min-height: 50vh;
+    min-height: 30vh;
 }
 
 .card {
-    width: calc((100vh - 17rem)/6)
+    width: calc((60vh)/6)
 }
 
 img {
     width: 100%;
     border-radius: 5px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
-    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-    filter: grayscale(0.2);
+    transition: all 0.1s ease;
+    filter: grayscale(0.1);
 }
 
 img:hover {
@@ -97,6 +95,7 @@ img:hover {
     color: rgb(0, 0, 0);
     border-radius: 10px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    background-color: lightgreen;
     display: none;
 }
 
@@ -132,7 +131,13 @@ button {
     text-transform: uppercase;
     border-radius: 10px;
     margin-top: 0.75rem;
-    background-color: rgb(39, 207, 39)
+    background-color: rgb(39, 207, 39);
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    box-shadow: none;
+    transform: translate(3px, 3px);
 }
 
 
@@ -157,6 +162,51 @@ button {
     .card {
         width: calc((100vh - 22rem)/6)
     }
+
+    section {
+        padding: 1.25rem 1rem 1.75rem;
+    }
+
+    #match {
+        padding: 1.5rem 2rem;
+        font-size: 3rem;
+        border-radius: 10px;
+        border: 3px solid black;
+    }
+
+    #grid {
+        gap: 12px;
+        margin: 30px 0;
+    }
+
+    #win {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        z-index: 3;
+        padding: 2.5rem 2rem;
+        color: rgb(0, 0, 0);
+        border-radius: 10px;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+        display: none;
+        text-align: center;
+    }
+
+    #win h3 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    #win p {
+        font-size: 1.2rem;
+        margin: 0.75rem 0;
+    }
+    
+    button {
+        font-size: 1.3em;
+    }
 } 
 
 
@@ -165,10 +215,6 @@ button {
     .card {
         width: calc((100vw - 21rem)/6);
         max-width: 150px;
-    }
-
-    section {
-        min-height: 320px;
     }
 
     #grid {
