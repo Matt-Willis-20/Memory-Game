@@ -48,7 +48,7 @@ const matches = document.getElementById("matches");
 const bestScore = document.getElementById("bestScore");
 const finalScore = document.getElementById("finalScore");
 // on page load, check local storage for previious score, otherwise at dash
-const savedScore = JSON.parse(localStorage.getItem("savedScore")) || "-";
+let savedScore = JSON.parse(localStorage.getItem("savedScore")) || "-";
 //set initial score values (if they exist in local storage)
 bestScore.textContent = savedScore;
 
@@ -125,7 +125,7 @@ function matchClose() {
 
 function matchPop() {
   match.style.display = "block";
-  setTimeout(matchClose, 600);
+  setTimeout(matchClose, 500);
 }
 
 function showWin() {
@@ -155,8 +155,8 @@ function checkMatch() {
   if (cardsChosen[0] == cardsChosen[1]) {
     matchPop();
     matchesCounter++;
-    cards[cardsChosenIds[0]].style.border = "3px solid Green";
-    cards[cardsChosenIds[1]].style.border = "3px solid Green";
+    cards[cardsChosenIds[0]].style.border = "3px solid rgb(0 145 0)";
+    cards[cardsChosenIds[1]].style.border = "3px solid rgb(0 145 0)";
     cards[cardsChosenIds[0]].removeEventListener("click", flipCard);
     cards[cardsChosenIds[1]].removeEventListener("click", flipCard);
     // if no match, return cards to original blank image
@@ -188,6 +188,8 @@ function checkMatch() {
     } else if (attemptCounter < savedScore) {
       localStorage.setItem("savedScore", attemptCounter);
       bestScore.textContent = attemptCounter;
+    } else {
+        return;
     }
   }
 };
@@ -206,7 +208,7 @@ function flipCard() {
 
   // now we want to check to see if cards match
   if (cardsChosen.length === 2) {
-    setTimeout(checkMatch, 1000);
+    setTimeout(checkMatch, 800);
   }
 };
 
