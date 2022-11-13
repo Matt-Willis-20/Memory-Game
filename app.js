@@ -1,19 +1,18 @@
 const characterEndPoint = "http://gateway.marvel.com/v1/public/characters";
 const key = "fd3ce76143a66b2909ac5f79125aae8a";
 
-// create empty arrays ready to be populated with fetch data
-let charactersArray = [];
-let selectedCharacters = [];
-let randomOrderData;
+// ---------------------------------------------------------------------------------------
+// GetAllCharacters FUNCTION TO FETCH MARVEL CHARACTER INFORMATION
+// ---------------------------------------------------------------------------------------
+
 let filteredData;
 
-// create a fundtion to fetch the marvel character information
 const getAllCharacters = async () => {
   // create 2 random numbers and save them the variables
   let offset1 = Math.floor(Math.random() * 16);
   let offset2;
 
-  // to prevent the same random number being generated, use the first random number to dictate the second random numbeer
+  // Rrevent the same random number being generated - use the first random number to dictate the second
   if (offset1 == 15) {
     offset2 = offset1 - 1;
   } else {
@@ -50,7 +49,6 @@ const bestScore = document.getElementById("bestScore");
 const finalScore = document.getElementById("finalScore");
 // on page load, check local storage for previious score, otherwise at dash
 const savedScore = JSON.parse(localStorage.getItem("savedScore")) || "-";
-
 //set initial score values (if they exist in local storage)
 bestScore.textContent = savedScore;
 
@@ -58,6 +56,15 @@ let cardsChosen = [];
 let cardsChosenIds = [];
 let attemptCounter = 0;
 let matchesCounter = 0;
+
+// ------------------------------------------------------------------------------------
+// shuffleCards FUNCTION TO RANDOMLY PICK 9 CHARACTERS 
+// ------------------------------------------------------------------------------------
+
+// create variables for shuffleCards function to access
+let randomOrderData;
+let charactersArray = [];
+let selectedCharacters = [];
 
 function shuffleCards() {
   randomOrderData = filteredData.sort(() => 0.5 - Math.random());
@@ -76,6 +83,10 @@ function shuffleCards() {
   charactersArray.sort(() => 0.5 - Math.random());
 }
 
+// ------------------------------------------------------------------------------------
+// setCards FUNCTION TO CREATE THE CARD ELEMENTS FOR EACH GAME
+// ------------------------------------------------------------------------------------
+
 function setCards() {
   shuffleCards();
   for (let i = 0; i < charactersArray.length; i++) {
@@ -88,15 +99,25 @@ function setCards() {
   }
 }
 
+// -----------------------------------------------------------------------------------------
+// createBoard FUNCTION TO CREATE THE PLAYING BOARD ONCE DATA HAS BEEN FETCHED
+// -----------------------------------------------------------------------------------------
+
 async function createBoard() {
   await getAllCharacters();
   setCards();
 }
 
+// invoice the createBoard function to build the game
 createBoard();
 
-// To enable and disable the pop-up when a user matches a pair of cards
+
+// -----------------------------------------------------------------------------------------
+// FUNCTIONS TO MANAGE THE IN-PLAY POP-UP PROMPTS/MESSAGES
+// -----------------------------------------------------------------------------------------
+
 const match = document.getElementById("match");
+const win = document.getElementById("win");
 
 function matchClose() {
   match.style.display = "none";
@@ -104,21 +125,20 @@ function matchClose() {
 
 function matchPop() {
   match.style.display = "block";
-  setTimeout(matchClose, 800);
+  setTimeout(matchClose, 600);
 }
-
-// To enable and disable the pop-up when a user matches a pair of cards
-const win = document.getElementById("win");
 
 function showWin() {
   finalScore.textContent = attemptCounter;
   win.style.display = "block";
 }
 
-// To check whether a set of cards match
+// -----------------------------------------------------------------------------------------
+// CHECKMATCH FUNCTION TO COMPARE THE TWO CHOSEN CARDS 
+// -----------------------------------------------------------------------------------------
+
 function checkMatch() {
   const cards = document.querySelectorAll("#grid img");
-
   //if the EXACT same card if chosen twice - let the user know this is not allowed
   if (cardsChosenIds[0] === cardsChosenIds[1]) {
     alert("You cannot select the same card twice");
@@ -152,7 +172,6 @@ function checkMatch() {
   }
 
   attemptCounter++;
-
   //reset to empty arrays, ready for the next set of cards
   cardsChosen = [];
   cardsChosenIds = [];
@@ -171,27 +190,40 @@ function checkMatch() {
       bestScore.textContent = attemptCounter;
     }
   }
-}
+};
+
+// -----------------------------------------------------------------------------------------------------
+// FLIPCARD FUNCTION TO 'FLIP' THE CARDS AND SUBSEQUENTLY INVOKE THE CHECKMATCH FUNCTION 
+// ----------------------------------------------------------------------------------------------------
 
 function flipCard() {
   const cardId = this.getAttribute("data-id"); // get the 'name' of the card
-  cardsChosen.push(charactersArray[cardId].name); // add the card 'name' into the cardsChosen array so that we can then compare them
+  // add the card 'name' into the cardsChosen array so that we can then compare them
+  cardsChosen.push(charactersArray[cardId].name); 
   cardsChosenIds.push(cardId);
-  this.setAttribute("src", charactersArray[cardId].img); // changes the image of the card to the image associated with the cardId
+  // add the card 'name' into the cardsChosen array so that we can then compare them
+  this.setAttribute("src", charactersArray[cardId].img);
 
   // now we want to check to see if cards match
   if (cardsChosen.length === 2) {
     setTimeout(checkMatch, 1000);
   }
-}
+};
+
+// -----------------------------------------------------------------------------------------------------
+// PLAY AGAIN FUNCTION - RESETTING THE GAME 
+// -----------------------------------------------------------------------------------------------------
 
 const playBtn = document.getElementById("play-again");
 playBtn.addEventListener("click", newGame);
 
-const cardsToReset = document.querySelectorAll("card");
-
 function newGame() {
   win.style.display = "none";
+  gridDisplay.replaceChildren();
   charactersArray = [];
-  shuffleCards();
+  attemptCounter = 0;
+  matchesCounter = 0;
+  attempts.textContent = attemptCounter;
+  matches.textContent = matchesCounter;
+  setCards();
 }
