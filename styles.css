@@ -27,7 +27,6 @@ section {
     align-items: center;
     flex-direction: column;
     border-radius: 15px;
-    
 }
 
 .score-container {
@@ -67,6 +66,7 @@ p {
     max-width: 1000px;
     margin: 20px 0;
     position: relative;
+    min-height: 50vh;
 }
 
 .card {
