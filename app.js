@@ -188,8 +188,6 @@ function checkMatch() {
     } else if (attemptCounter < savedScore) {
       localStorage.setItem("savedScore", attemptCounter);
       bestScore.textContent = attemptCounter;
-    } else {
-        return;
     }
   }
 };
@@ -227,5 +225,7 @@ function newGame() {
   matchesCounter = 0;
   attempts.textContent = attemptCounter;
   matches.textContent = matchesCounter;
+  savedScore = JSON.parse(localStorage.getItem("savedScore")) || "-";
+  bestScore.textContent = savedScore;
   setCards();
 }
